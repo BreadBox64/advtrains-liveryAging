@@ -149,9 +149,6 @@ minetest.register_tool("advtrains:painter", {
 	_tt_help = attrans("A tool to customize your train's liveries!")..'\n'..attrans("Use RMB to open the color selection window,")..'\n'..attrans("and LMB to fill the painter with dye!"), -- If anyone has the tooltip mod (https://content.minetest.net/packages/Wuzzy/tt/) installed this will help explain how to use the tool
 	inventory_image = "advtrains_painter.png",
 	wield_scale = {x = 2, y = 2, z = 1},
-	on_place = function(self)
-
-	end,
 	on_secondary_use = show_painter_form,
 	_on_paint = on_paint
 })

@@ -181,6 +181,12 @@ end
 dofile(advtrains.modpath.."/helpers.lua");
 --dofile(advtrains.modpath.."/debugitems.lua");
 
+-- Centralized location to check if a mod is enabled
+advtrains.enabled_mods = {
+	dye = (minetest.get_modpath("dye") ~= nil),
+	default = (minetest.get_modpath("default") ~= nil)
+}
+
 advtrains.meseconrules = 
 {{x=0,  y=0,  z=-1},
  {x=1,  y=0,  z=0},

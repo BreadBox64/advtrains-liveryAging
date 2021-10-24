@@ -121,10 +121,11 @@ function wagon:set_id(wid)
 	
 	minetest.after(0.2, function() self:reattach_all() end)
 	
-	
-	
 	if self.set_textures then
 		self:set_textures(data)
+	end
+	if self.set_model then
+		self:set_model(data)
 	end
 	
 	if self.custom_on_activate then
