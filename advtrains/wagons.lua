@@ -185,12 +185,20 @@ function wagon:on_punch(puncher, time_from_last_punch, tool_capabilities, direct
 				return
 			end
 		end
+		
 		local itemstack = puncher:get_wielded_item()
-		-- WARNING: This part of the API is guaranteed to change! DO NOT USE!
-		if self.set_livery and itemstack:get_name() == "bike:painter" then
-			self:set_livery(puncher, itemstack, data)
+		if self.set_livery and (table.indexof(self.livery_tools, itemstack:get_name()) ~= -1) then
+			local def = itemstack:get_definition()
+			local proceed = true
+			if def._on_paint then
+				proceed = def:_on_paint(puncher, itemstack)
+			end
+			if proceed then
+				self:set_livery(puncher, itemstack, data)
+			end
 			return
 		end
+
 		-- check whether wagon has an inventory. Is is empty?
 		if self.has_inventory then
 			local inv=minetest.get_inventory({type="detached", name="advtrains_wgn_"..self.id})
@@ -1311,6 +1319,9 @@ function advtrains.register_wagon(sysname_p, prototype, desc, inv_img, nincreati
 	local sysname = sysname_p
 	if not string.match(sysname, ":") then
 		sysname = "advtrains:"..sysname_p
+	end
+	if prototype.set_livery and not prototype.livery_tools then
+		prototype.livery_tools = {"advtrains:painter"}
 	end
 	setmetatable(prototype, {__index=wagon})
 	minetest.register_entity(":"..sysname,prototype)
